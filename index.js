@@ -28,10 +28,6 @@ function logWarning(warning) {
     }
 }
 
-logInfo("Hello.my name is numan");
-logError(new Error("Panick, an error has occurred!"));
-logWarning("This is just a warning so you can relax");
-
 module.exports = {
     logInfo: logInfo,
     logError: logError,
