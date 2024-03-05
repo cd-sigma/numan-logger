@@ -1,12 +1,22 @@
-const chalk = require("chalk");
+const _ = require("lodash");
 const util = require("util");
+const chalk = require("chalk");
 
 const timeUtil = require("./utils/time.util");
 const logTypeEnum = require("./enums/log.type.enum");
 
+function jsonToLine(json) {
+    if (!_.isObject(json)) {
+        return chalk.whiteBright(json);
+    }
+    return Object.keys(json).map((key) => {
+        return `${chalk.magentaBright(key)}: ${chalk.whiteBright(json[key])}`
+    }).join("   ");
+}
+
 function logInfo(info) {
     try {
-        console.log(chalk.blueBright(`[ ${timeUtil.getCurrentIndianTime()} ]`) + " | " + chalk.greenBright(logTypeEnum.INFO) + " | " + chalk.whiteBright(info));
+        console.log(chalk.blueBright(`[ ${timeUtil.getCurrentIndianTime()} ]`) + " | " + chalk.greenBright(logTypeEnum.INFO) + " | " + jsonToLine(info));
     } catch (error) {
         throw error;
     }
@@ -14,7 +24,7 @@ function logInfo(info) {
 
 function logError(error) {
     try {
-        console.log(chalk.blueBright(`[ ${timeUtil.getCurrentIndianTime()} ]`) + " | " + chalk.redBright(logTypeEnum.ERROR) + " | " + chalk.whiteBright(util.inspect(error)));
+        console.log(chalk.blueBright(`[ ${timeUtil.getCurrentIndianTime()} ]`) + " | " + chalk.redBright(logTypeEnum.ERROR) + " | " + (error instanceof Error ? util.inspect(error) : jsonToLine(error)));
     } catch (error) {
         throw error;
     }
@@ -22,7 +32,7 @@ function logError(error) {
 
 function logWarning(warning) {
     try {
-        console.log(chalk.blueBright(`[ ${timeUtil.getCurrentIndianTime()} ]`) + " | " + chalk.yellowBright(logTypeEnum.WARNING) + " | " + chalk.whiteBright(warning));
+        console.log(chalk.blueBright(`[ ${timeUtil.getCurrentIndianTime()} ]`) + " | " + chalk.yellowBright(logTypeEnum.WARNING) + " | " + jsonToLine(warning));
     } catch (error) {
         throw error;
     }
