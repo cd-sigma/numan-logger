@@ -6,7 +6,7 @@
     "moment-timezone": "^0.5.45"
   },
   "name": "numan-logger",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
